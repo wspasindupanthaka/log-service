@@ -68,16 +68,17 @@ services:
       - ${GLOBAL_NETWORK:-elastic}
   logstash:
     image: docker.elastic.co/logstash/logstash:${ELASTIC_VERSION}
-    command: logstash -f /etc/logstash/conf.d/logback.conf
+    restart: always
     ports:
-      - "9600:9600"
+      - 5000:5000
+      - 5044:5044
+      - 9600:9600
     depends_on:
       - elastic-1
       - elastic-2
       - elastic-3
     volumes:
-      - ./config/logback.conf:/etc/logstash/conf.d/logback.conf
-      - ./docker-logs/logstash:/logs
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     environment:
       LS_JAVA_OPTS: "-Xms256m -Xmx512m"
       CLUSTER_NAME: es-twitter-cluster

@@ -13,17 +13,12 @@ public class LogService {
 
     private Logger logger = LogManager.getLogger();
 
-    public void insertLog(LogLine logLine) {
+    public void insertLog(LogLine logLine, String message) {
         MDC.put("applicationName", logLine.getApplicationName());
         MDC.put("serviceName", logLine.getServiceName());
         MDC.put("userName", logLine.getUserName());
 
-logger.info("Sample Log Sample Log Sample Log Sample Log Sample Log");
-    }
-
-    public static void main(String[] args) {
-        LogService logService = new LogService();
-        logService.insertLog(new LogLine("Samsung","Bixby","pasindu"));
+        logger.info(message);
     }
 
 }
