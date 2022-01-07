@@ -1,0 +1,8 @@
+2022-01-06 11:29:53 [main] INFO  c.p.logservice.service.LogService applicationName=MyApplication serviceName=MyService userName=pasindu Sample Log
+2022-01-06 11:30:15 [main] INFO  c.p.logservice.service.LogService applicationName=MyApplication serviceName=MyService userName=pasindu Sample Log
+2022-01-06 12:24:50 [main] INFO  c.p.logservice.service.LogService applicationName=MyApplication serviceName=MyService userName=pasindu Sample Log
+2022-01-06 12:31:16 [main] INFO  c.p.logservice.service.LogService applicationName=MyApplication serviceName=MyService userName=pasindu Sample Log
+2022-01-06 15:24:57 [main] INFO  c.p.logservice.service.LogService applicationName=Samsung serviceName=Bixby userName=yohan Sample Log
+2022-01-06 15:27:27 [main] INFO  c.p.logservice.service.LogService applicationName=Samsung serviceName=Bixby userName=yohan Sample Log
+2022-01-06 15:29:04 [main] INFO  c.p.logservice.service.LogService applicationName=Samsung serviceName=Bixby userName=buddhika Sample Log Sample Log Sample Log Sample Log Sample Log
+2022-01-06 20:26:20 [main] INFO  c.p.logservice.service.LogService applicationName=Samsung serviceName=Bixby userName=pasindu Sample Log Sample Log Sample Log Sample Log Sample Log
