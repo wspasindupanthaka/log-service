@@ -2,23 +2,10 @@ package com.pasindu.logservice.service;
 
 import com.pasindu.logservice.model.LogLine;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.List;
 
-import org.slf4j.MDC;
-import org.springframework.stereotype.Service;
+public interface LogService {
 
-@Service
-public class LogService {
-
-    private Logger logger = LogManager.getLogger();
-
-    public void insertLog(LogLine logLine, String message) {
-        MDC.put("applicationName", logLine.getApplicationName());
-        MDC.put("serviceName", logLine.getServiceName());
-        MDC.put("userName", logLine.getUserName());
-
-        logger.info(message);
-    }
+    void insertLog(List<LogLine> logLines);
 
 }
