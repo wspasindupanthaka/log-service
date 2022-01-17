@@ -1,5 +1,8 @@
 package com.pasindu.logservice.consumer.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pasindu.logservice.consumer.KafkaConsumer;
 import com.pasindu.logservice.kafka.admin.client.KafkaAdminClient;
 import com.pasindu.logservice.kafka.config.data.KafkaConfigData;
@@ -61,21 +64,14 @@ public class LogsKafkaConsumer implements KafkaConsumer<Long, LogAvroModel> {
                         @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
                         @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
 
-        LOG.info("{} number of message received with keys {}, partitions {} and offsets {}, " +
-                        "sending it to elastic: Thread id {}",
-                messages.size(),
-                keys.toString(),
-                partitions.toString(),
-                offsets.toString(),
-                Thread.currentThread().getId());
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        System.out.println("Messages" + messages);
-
-
-        List<LogLine> logLines = logAvroModelToLogLineTransformer.getLogLines(messages);
-
-        logService.insertLog(logLines);
-
-        LOG.info("Documents saved to elasticsearch with ids {}", "on receive");
+        try {
+            List<LogLine> logLines = objectMapper.readValue(messages.toString(), new TypeReference<List<LogLine>>() {
+            });
+            logService.insertLog(logLines);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 }
