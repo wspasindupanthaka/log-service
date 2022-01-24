@@ -21,10 +21,11 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class LogsKafkaConsumer implements KafkaConsumer<Long, LogAvroModel> {
+public class LogsKafkaConsumer implements KafkaConsumer<Long, String> {
 
     private static final Logger LOG = LoggerFactory.getLogger(LogsKafkaConsumer.class);
 
@@ -59,7 +60,7 @@ public class LogsKafkaConsumer implements KafkaConsumer<Long, LogAvroModel> {
 
     @Override
     @KafkaListener(id = "logsTopicListener", topics = "${kafka-config.topic-name}")
-    public void receive(@Payload List<LogAvroModel> messages,
+    public void receive(@Payload List<String> messages,
                         @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) List<Integer> keys,
                         @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
                         @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
@@ -67,7 +68,7 @@ public class LogsKafkaConsumer implements KafkaConsumer<Long, LogAvroModel> {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            List<LogLine> logLines = objectMapper.readValue(messages.toString(), new TypeReference<List<LogLine>>() {
+            List<LogLine> logLines = objectMapper.readValue(messages.toString(), new TypeReference<>() {
             });
             logService.insertLog(logLines);
         } catch (JsonProcessingException e) {
